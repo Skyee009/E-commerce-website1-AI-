@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Elegant Shop - Modern Ecommerce Website</title>
+<style>
+  /* CSS Variables for Colors and Spacing - Black + Blue theme */
+  :root {
+    --color-bg: #0a0a0f;
+    --color-text: #cbd5e1; /* light slate */
+    --color-text-muted: #94a3b8; /* muted slate */
+    --color-primary: #3b82f6; /* blue-500 */
+    --color-primary-light: #60a5fa; /* blue-400 */
+    --color-accent: #60a5fa;
+    --color-accent-bg: #0a0a0f;
+    --color-accent-text: #cbd5e1;
+    --color-card-bg: #12131a;
+    --color-shadow: rgba(59,130,246,0.15);
+    --border-radius: 0.75rem;
+    --spacing-base: 1rem;
+    --transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-glow-color: #3b82f6;
+  }
+
+  /* Reset & base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Poppins', system-ui, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  img {
+    max-width: 100%;
+    display: block;
+    border-radius: var(--border-radius);
+    user-select: none;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-base);
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-primary-light);
+    z-index: 10;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4.5rem;
+  }
+  .logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    letter-spacing: -0.05em;
+    user-select: none;
+    border: 2px solid var(--color-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  }
+  .logo.shine {
+    box-shadow: 0 0 12px 2px var(--color-primary);
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+  }
+  .nav-links a {
+    padding: 0.25rem 0.5rem;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  }
+  .nav-links a:hover,
+  .nav-links a:focus {
+    color: var(--color-primary-light);
+    box-shadow: 0 0 15px 3px var(--color-primary);
+    transform: scale(1.05);
+  }
+  .nav-links a.shine {
+    box-shadow: 0 0 15px 3px var(--color-primary);
+  }
+  .cart-button {
+    position: relative;
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--border-radius);
+    color: var(--color-primary);
+    font-weight: 700;
+    padding: 0.55rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    overflow: hidden;
+  }
+  .cart-button:hover,
+  .cart-button:focus {
+    background: var(--color-primary);
+    color: var(--color-accent-text);
+    transform: scale(1.05);
+    box-shadow: 0 0 14px 2px var(--color-primary);
+  }
+  .cart-button.shine {
+    box-shadow: 0 0 14px 3px var(--color-primary);
+  }
+  .cart-count {
+    position: absolute;
+    top: -0.375rem;
+    right: -0.5rem;
+    background: #ef4444; /* red */
+    color: #fff;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    user-select: none;
+  }
+
+  /* Hero */
+  .hero {
+    padding-top: 6rem;
+    padding-bottom: 5rem;
+    text-align: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+    user-select: none;
+  }
+  .hero p {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .hero button {
+    background: var(--color-bg);
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.125rem;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--color-primary);
+    cursor: pointer;
+    box-shadow: none;
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero button:hover,
+  .hero button:focus {
+    background: var(--color-primary);
+    color: var(--color-accent-text);
+    transform: scale(1.05);
+    box-shadow: 0 0 18px 4px var(--color-primary);
+  }
+  .hero button.shine {
+    box-shadow: 0 0 18px 6px var(--color-primary);
+  }
+
+  /* Products grid */
+  .products {
+    padding-bottom: 6rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+  }
+
+  /* Product card */
+  .product-card {
+    background: var(--color-card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 1.5px 4px var(--color-shadow);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 2px solid var(--color-primary);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+    cursor: pointer;
+  }
+  .product-card:hover,
+  .product-card:focus-within {
+    box-shadow: 0 0 22px 3px var(--color-primary);
+    transform: translateY(-4px);
+    border-color: var(--color-primary-light);
+    outline: none;
+  }
+  .product-card.shine {
+    box-shadow: 0 0 22px 4px var(--color-primary);
+  }
+  .product-image {
+    border-radius: var(--border-radius);
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    background: #1c1f2a;
+  }
+  .product-name {
+    font-weight: 700;
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
+    color: var(--color-primary);
+    user-select: none;
+  }
+  .product-price {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    user-select: none;
+  }
+  .add-to-cart-btn {
+    margin-top: auto;
+    background: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    padding: 0.75rem 1rem;
+    font-weight: 700;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .add-to-cart-btn:hover,
+  .add-to-cart-btn:focus {
+    background: var(--color-primary);
+    color: var(--color-accent-text);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 5px var(--color-primary);
+  }
+  .add-to-cart-btn.shine {
+    box-shadow: 0 0 20px 6px var(--color-primary);
+  }
+
+  /* Cart sidebar */
+  #cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    max-width: 400px;
+    width: 100%;
+    background: var(--color-card-bg);
+    box-shadow: -3px 0 15px rgba(59,130,246,0.25);
+    padding: 2rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow var(--transition-fast);
+    z-index: 20;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  #cart-sidebar.open {
+    transform: translateX(0);
+  }
+  #cart-sidebar header {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    user-select: none;
+  }
+  #cart-items {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+  }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .cart-item img {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--border-radius);
+    object-fit: cover;
+    margin-right: 1rem;
+    user-select: none;
+  }
+  .cart-item-info {
+    flex-grow: 1;
+  }
+  .cart-item-name {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0 0 0.25rem;
+    user-select: none;
+  }
+  .cart-item-price {
+    color: var(--color-text-muted);
+    font-weight: 600;
+    user-select: none;
+  }
+  .cart-item-remove {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem;
+    transition: color 0.15s ease-in-out;
+    user-select: none;
+  }
+  .cart-item-remove:hover,
+  .cart-item-remove:focus {
+    color: #b91c1c;
+  }
+  #cart-total {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    text-align: right;
+    user-select: none;
+  }
+  #checkout-btn {
+    background: transparent;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.125rem;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--color-primary);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+    user-select: none;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  #checkout-btn:hover,
+  #checkout-btn:focus {
+    background: var(--color-primary);
+    color: var(--color-accent-text);
+    transform: scale(1.03);
+    box-shadow: 0 0 20px 2px var(--color-primary);
+  }
+  #checkout-btn.shine {
+    box-shadow: 0 0 20px 3px var(--color-primary);
+  }
+
+  /* Overlay behind cart */
+  #cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 15;
+  }
+  #cart-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Responsive and container query for cart width */
+  @container (min-width: 720px) {
+    #cart-sidebar {
+      max-width: 400px;
+    }
+  }
+
+  /* Shine effect styles */
+  .shine-effect {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+    background: linear-gradient(115deg, transparent, rgba(59,130,246,0.3), transparent);
+    transform: translateX(-100%) rotate(25deg);
+    transition: none;
+    mix-blend-mode: screen;
+  }
+
+</style>
+</head>
+<body>
+<header>
+  <div class="container" role="banner">
+    <nav aria-label="Primary navigation">
+      <a href="#" class="logo" aria-label="Elegant Shop home" tabindex="0">ElegantShop</a>
+      <div class="nav-links">
+        <a href="#products" tabindex="0" class="shine-target">Products</a>
+        <button class="cart-button shine-target" aria-haspopup="dialog" aria-controls="cart-sidebar" aria-expanded="false" id="cartButton">
+          Cart <span class="cart-count" id="cartCount" aria-live="polite" aria-atomic="true">0</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero container" role="region" aria-labelledby="hero-title">
+    <h1 id="hero-title">Discover Premium Products For Your Everyday Needs</h1>
+    <p>Experience thoughtful design and quality with our curated collection of essentials.</p>
+    <button id="browseProductsBtn" aria-describedby="hero-desc" class="shine-target">Browse Our Collection</button>
+  </section>
+
+  <section class="products container" id="products" role="region" aria-label="Product listings">
+    <!-- Product cards will be injected by JS -->
+  </section>
+</main>
+
+<!-- Cart Sidebar -->
+<aside id="cart-sidebar" role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1" hidden>
+  <header id="cart-title">Your Cart</header>
+  <div id="cart-items" tabindex="0" aria-live="polite" aria-relevant="additions removals"></div>
+  <div id="cart-total" aria-live="polite" aria-atomic="true">Total: $0.00</div>
+  <button id="checkout-btn" class="shine-target">Checkout</button>
+</aside>
+
+<div id="cart-overlay" tabindex="-1" aria-hidden="true"></div>
+
+<script>
+  // Sample product data
+  const products = [
+    {
+      id: 1,
+      name: 'Classic Leather Wallet',
+      price: 49.99,
+      image: 'https://images.unsplash.com/photo-1555529669-636d81c2e5a2?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      id: 2,
+      name: 'Minimal Wrist Watch',
+      price: 199.95,
+      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      id: 3,
+      name: 'Cozy Knit Sweater',
+      price: 89.5,
+      image: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      id: 4,
+      name: 'Modern Headphones',
+      price: 129.99,
+      image: 'https://images.unsplash.com/photo-1512499617640-c2f99901a0f4?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      id: 5,
+      name: 'Sleek Sunglasses',
+      price: 64.0,
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
+    },
+    {
+      id: 6,
+      name: 'Elegant Backpack',
+      price: 139.99,
+      image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=400&q=80',
+    }
+  ];
+
+  // DOM references
+  const productsContainer = document.querySelector('.products');
+  const cartSidebar = document.getElementById('cart-sidebar');
+  const cartOverlay = document.getElementById('cart-overlay');
+  const cartButton = document.getElementById('cartButton');
+  const cartCount = document.getElementById('cartCount');
+  const cartItemsContainer = document.getElementById('cart-items');
+  const cartTotalEl = document.getElementById('cart-total');
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const browseProductsBtn = document.getElementById('browseProductsBtn');
+
+  let cart = [];
+
+  // Render product cards with shine effect container
+  function renderProducts() {
+    productsContainer.innerHTML = '';
+    products.forEach(product => {
+      const card = document.createElement('article');
+      card.className = 'product-card shine-target';
+      card.tabIndex = 0;
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy" />
+        <h2 class="product-name">${product.name}</h2>
+        <p class="product-price">$${product.price.toFixed(2)}</p>
+        <button class="add-to-cart-btn shine-target" aria-label="Add ${product.name} to cart" data-id="${product.id}">Add to Cart</button>
+      `;
+      productsContainer.appendChild(card);
+    });
+  }
+
+  // Add item to cart
+  function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    const existingItem = cart.find(item => item.id === productId);
+    if (existingItem) {
+      existingItem.quantity++;
+    } else {
+      cart.push({...product, quantity: 1});
+    }
+    updateCartUI();
+    openCart();
+  }
+
+  // Remove item from cart
+  function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartUI();
+  }
+
+  // Update cart UI
+  function updateCartUI() {
+    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartItemsContainer.innerHTML = '';
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+      cartTotalEl.textContent = 'Total: $0.00';
+      checkoutBtn.disabled = true;
+      return;
+    }
+    checkoutBtn.disabled = false;
+    cart.forEach(item => {
+      const itemEl = document.createElement('div');
+      itemEl.className = 'cart-item';
+      itemEl.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" />
+        <div class="cart-item-info">
+          <p class="cart-item-name">${item.name}</p>
+          <p class="cart-item-price">$${(item.price * item.quantity).toFixed(2)} (${item.quantity} × $${item.price.toFixed(2)})</p>
+        </div>
+        <button class="cart-item-remove" aria-label="Remove ${item.name} from cart" data-id="${item.id}">&times;</button>
+      `;
+      cartItemsContainer.appendChild(itemEl);
+    });
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+  }
+
+  // Open cart sidebar
+  function openCart() {
+    cartSidebar.hidden = false;
+    cartSidebar.classList.add('open');
+    cartOverlay.classList.add('active');
+    cartButton.setAttribute('aria-expanded', 'true');
+    cartSidebar.focus();
+  }
+
+  // Close cart sidebar
+  function closeCart() {
+    cartSidebar.classList.remove('open');
+    cartOverlay.classList.remove('active');
+    cartButton.setAttribute('aria-expanded', 'false');
+    setTimeout(() => {
+      cartSidebar.hidden = true;
+      cartButton.focus();
+    }, 350);
+  }
+
+  // Event listeners
+  productsContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('add-to-cart-btn')) {
+      const productId = Number(e.target.dataset.id);
+      addToCart(productId);
+    }
+  });
+
+  cartItemsContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('cart-item-remove')) {
+      const productId = Number(e.target.dataset.id);
+      removeFromCart(productId);
+    }
+  });
+
+  cartButton.addEventListener('click', () => {
+    if (cartSidebar.classList.contains('open')) {
+      closeCart();
+    } else {
+      if (cart.length === 0) {
+        alert('Your cart is empty. Please add products first.');
+      } else {
+        openCart();
+      }
+    }
+  });
+
+  cartOverlay.addEventListener('click', closeCart);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && cartSidebar.classList.contains('open')) {
+      closeCart();
+    }
+  });
+
+  checkoutBtn.addEventListener('click', () => {
+    alert('Thank you for your purchase! (This is a demo, no real transaction.)');
+    cart = [];
+    updateCartUI();
+    closeCart();
+  });
+
+  browseProductsBtn.addEventListener('click', () => {
+    document.getElementById('products').scrollIntoView({behavior: 'smooth'});
+  });
+
+  // Initialize product rendering and cart UI
+  renderProducts();
+  updateCartUI();
+
+  // Shine effect: Attach shine effect DOM elements and update position on mouse move
+  // Applies to elements with class .shine-target
+
+  const shineElements = [];
+
+  function createShineEffect(el) {
+    const shine = document.createElement('div');
+    shine.classList.add('shine-effect');
+    el.style.position = 'relative'; // Ensure relative for absolute shine overlay
+    el.appendChild(shine);
+    shineElements.push({el, shine});
+  }
+
+  function updateShinePosition(e) {
+    // Update the shine gradient position based on mouse position inside element
+    shineElements.forEach(({el, shine}) => {
+      if (!el.matches(':hover')) {
+        // Reset shine position to default off-screen left when not hovered
+        shine.style.transition = 'transform 0.5s ease-out';
+        shine.style.transform = 'translateX(-100%) rotate(25deg)';
+        el.classList.remove('shine');
+        return;
+      }
+      el.classList.add('shine');
+      shine.style.transition = 'none';
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      // Map x from [0, width] to percent, then shift shine gradient accordingly
+      const px = Math.min(Math.max(x, 0), rect.width);
+      // We move the shine gradient horizontally inside element
+      const translateX = px - rect.width * 0.5;
+      // Keep rotation constant 25deg for a slanting shine
+      shine.style.transform = `translateX(${translateX}px) rotate(25deg)`;
+    });
+  }
+
+  // Create shine effect overlays on all shine-target elements
+  function initShineEffect() {
+    const targets = document.querySelectorAll('.shine-target');
+    targets.forEach(el => {
+      createShineEffect(el);
+    });
+  }
+
+  // Attach mousemove to window to update shine on every moved cursor
+  window.addEventListener('mousemove', updateShinePosition);
+
+  // Initialize shine after DOM content loaded
+  window.addEventListener('DOMContentLoaded', () => {
+    initShineEffect();
+  });
+
+</script>
+</body>
+</html>
+
